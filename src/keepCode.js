@@ -10,3 +10,17 @@ const reducer = (state, action) => {
   }
 };
 const [state, dispatch] = useReducer(reducer, {});
+//////////////////////////////////////////////////////////////////////////////
+function keepAcounts() {
+  if (register.fullName && register.password && register.phoneNum) {
+    client = [
+      ...client,
+      {
+        fullName: register.fullName,
+        password: register.password,
+        phoneNum: register.phoneNum,
+      },
+    ];
+  }
+}
+keepAcounts();
