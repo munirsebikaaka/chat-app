@@ -30,4 +30,3 @@ const password = () => {
 store.dispatch(fullName());
 store.dispatch(phoneNum());
 const pass = store.dispatch(password());
-console.log(pass.payload);

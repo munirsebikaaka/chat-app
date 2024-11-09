@@ -1,3 +1,6 @@
 .chatsBoard {
   display: flex;
 }
+.friend {
+  cursor: pointer;
+}
