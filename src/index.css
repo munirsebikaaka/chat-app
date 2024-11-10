@@ -1,6 +1,17 @@
-.chatsBoard {
+.chatsBoard,
+.main {
   display: flex;
 }
 .friend {
   cursor: pointer;
+}
+.mainApp {
+  max-width: 800px;
+  margin: 50px auto;
+  border: 1px solid red;
+}
+
+.main {
+  gap: 50px;
+  width: 100%;
 }
