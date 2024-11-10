@@ -9,7 +9,6 @@ const oldAcounts = [
   { fullName: "drizy", phoneNum: "84301" },
   { fullName: "moxhus", phoneNum: "57320" },
 ];
-const me = [{ fullName: "codes", phoneNum: "57220" }];
 function App() {
   const [chat1, setChat1] = useState("");
   const [chatOb1, setChatOb1] = useState([{}]);
@@ -18,6 +17,14 @@ function App() {
   const [personChat, setPersonChat] = useState([{}]);
   const [seeOrHideAllChats, setSeeOrHideAllChats] = useState(false);
   const [seeHideFriendChats, setSeeHideFriendChats] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [password, setPassword] = useState("");
+  const [phoneNum, setPhoneNum] = useState("");
+  const [checkInputs, setCheckInputs] = useState(false);
+  const [hideLogin, setHideLogin] = useState(false);
+  const [logError, setLogError] = useState("");
+
+  const me = [{ fullName: firstName, phoneNum: phoneNum, password: password }];
 
   const chatsRecieveSendFunctionallity = (
     setChatObj,
@@ -55,10 +62,36 @@ function App() {
     setSeeHideFriendChats((SEE) => !SEE);
   };
 
+  const loginToApplication = () => {
+    if (!firstName) setLogError("please input names");
+    if (!password) setLogError("please input password");
+    if (!phoneNum) setLogError("please input phone number");
+    if (firstName && phoneNum && password) setCheckInputs(true);
+
+    if (firstName && phoneNum && password) setHideLogin(true);
+  };
+
   return (
     <div className="mainApp">
-      {/* <Login /> */}
-      <Introduction onSeeAllChats={seeAllChats} onSeeFriendAcc={seeFriendAcc} />
+      <Login
+        firstName={firstName}
+        phoneNum={phoneNum}
+        password={password}
+        setFirstName={setFirstName}
+        setPassword={setPassword}
+        setPhoneNum={setPhoneNum}
+        onLoginToApplication={loginToApplication}
+        hideLogin={hideLogin}
+        logError={logError}
+      />
+      {checkInputs ? (
+        <Introduction
+          onSeeAllChats={seeAllChats}
+          onSeeFriendAcc={seeFriendAcc}
+        />
+      ) : (
+        ""
+      )}
 
       <div className="main">
         <Friend
@@ -76,6 +109,7 @@ function App() {
           chatOb1={chatOb1}
           chatOb2={chatOb2}
           seeHideFriendAcc={seeHideFriendChats}
+          me={me}
         />
       </div>
       <AllCharts
@@ -192,6 +226,7 @@ const AllCharts = ({ onSelectFriendFromOldFriends, seeOrHideAllChats }) => {
 };
 
 const Owner = ({
+  me,
   chat1,
   setChat1,
   onPushToChats,
