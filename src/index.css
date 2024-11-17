@@ -2,22 +2,62 @@
 .main {
   display: flex;
 }
+
+.chatsBoard {
+  justify-content: space-between;
+  border: 1px solid red;
+}
+
 .secChat {
   margin-top: 30px;
 }
 .friend {
   cursor: pointer;
 }
+.main {
+  gap: 50px;
+  width: 100%;
+  border: 1px solid red;
+}
 .mainApp {
   max-width: 800px;
   margin: 50px auto;
   height: 90vh;
   position: relative;
+  /* border: 1px solid red; */
 }
 
-.main {
-  gap: 50px;
+.person {
+  border: 1px solid red;
   width: 100%;
+}
+
+.chatOner {
+  border: 1px solid red;
+  width: 100%;
+  height: 620px;
+}
+/* CHAT */
+.chat {
+  display: flex;
+  justify-content: space-between;
+}
+.chat .cont {
+  font-size: 1rem;
+  margin: 5px;
+  font-family: sans-serif;
+}
+.chat1 {
+  background-color: #25fc90;
+}
+.chat2 {
+  background-color: white;
+}
+.time {
+  font-size: 0.6rem;
+  margin-top: 10px;
+  padding-right: 10px;
+  color: #575757;
 }
 /* LOGIN CELL */
 .login-cell {
@@ -113,13 +153,13 @@ li {
   gap: 5px;
   border-radius: 11px;
 }
-li span {
+.span {
   font-size: 1.4rem;
   text-transform: capitalize;
   font-family: sans-serif;
   font-weight: 500;
 }
-img {
+li img {
   width: 40px;
   height: 40px;
   border-radius: 50%;

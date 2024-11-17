@@ -9,6 +9,7 @@ const oldAcounts = [
   { fullName: "drizy", phoneNum: "84301", img: "people/drizzie.jpg" },
   { fullName: "moxhus", phoneNum: "57320", img: "people/moxhus.png" },
 ];
+
 function App() {
   const [chat1, setChat1] = useState("");
   const [chatOb1, setChatOb1] = useState([{}]);
@@ -24,7 +25,7 @@ function App() {
   const [hideLogin, setHideLogin] = useState(false);
   const [logError, setLogError] = useState("");
 
-  const [hideIntro, setHideIntro] = useState(true);
+  const [hideIntro, setHideIntro] = useState(false);
 
   const me = [
     {
@@ -59,7 +60,6 @@ function App() {
 
   const seeAllChats = () => {
     setSeeOrHideAllChats((see) => !see);
-    // setHideIntro((intro) => !intro);
   };
 
   const selectFriendFromOldFriends = (phoneNum) => {
@@ -67,6 +67,7 @@ function App() {
       (el) => el.phoneNum === phoneNum && setPersonChat([...personChat, el])
     );
     setSeeOrHideAllChats((see) => !see);
+    // setHideIntro(true);
   };
 
   const seeFriendAcc = () => {
@@ -100,7 +101,7 @@ function App() {
         onSeeAllChats={seeAllChats}
         onSeeFriendAcc={seeFriendAcc}
         firstName={firstName}
-        hideIntro={hideIntro}
+        // hideIntro={hideIntro}
         seeHideFriendAcc={seeHideFriendChats}
       />
       {/* ) : (
@@ -146,7 +147,7 @@ const Introduction = ({
 }) => {
   return (
     <>
-      {hideIntro ? (
+      {!hideIntro ? (
         <div className="firstSight">
           <h1>Hello and Welcome Mr/Mrs {firstName} to the simple Chat App</h1>
           <button className="findChats" onClick={onSeeAllChats}>
@@ -172,50 +173,47 @@ const Friend = ({
   personChat,
 }) => {
   return (
-    <>
-      {
-        <>
-          {personChat.map((el) => (
-            <div>
-              {el.fullName ? (
-                <div>
-                  <ul>
-                    <li key={el.fullName}>
-                      <img src={el.img} />
-                      <span>{el.fullName}</span>
-                    </li>
-                  </ul>
-                  <Chats chatOb1={chatOb1} chatOb2={chatOb2} />
+    <div className="person">
+      <ul>
+        {personChat.map((el) =>
+          el.fullName ? (
+            <li className="span">
+              <img src={el.img} />
+              <span>{el.fullName}</span>
+            </li>
+          ) : (
+            ""
+          )
+        )}
+      </ul>
+      <Chats chatOb1={chatOb1} chatOb2={chatOb2} />
 
-                  <div className="textInput">
-                    <input
-                      type="text"
-                      value={chat2}
-                      onChange={(e) => setChat2(e.target.value)}
-                    />
-                    <button onClick={onPushToChats2}>send</button>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-          ))}
-        </>
-      }
-    </>
+      <div className="textInput">
+        <input
+          type="text"
+          value={chat2}
+          onChange={(e) => setChat2(e.target.value)}
+        />
+        <button onClick={onPushToChats2}>send</button>
+      </div>
+    </div>
   );
+};
+
+const styles = {
+  backgroundImage: `url('people/back-img.jpg')`,
+  backgroundSize: "cover",
 };
 
 const Chats = ({ chatOb1, chatOb2 }) => {
   return (
-    <div className="chatsBoard">
+    <div className="chatsBoard chatOner" style={styles}>
       <ul>
         {chatOb2.map((el) =>
           el.cont ? (
-            <li key={el.cont}>
-              <span>{el.cont}</span>
-              <span>{el.time}</span>
+            <li className="chat1 chat" key={el.cont}>
+              <span className="cont">{el.cont}</span>
+              <span className="time">{el.time}</span>
             </li>
           ) : (
             ""
@@ -225,9 +223,9 @@ const Chats = ({ chatOb1, chatOb2 }) => {
       <ul className="secChat">
         {chatOb1.map((el) =>
           el.cont ? (
-            <li key={el.cont}>
-              <span>{el.cont}</span>
-              <span>{el.time}</span>
+            <li className="chat2 chat" key={el.cont}>
+              <span className="cont">{el.cont}</span>
+              <span className="time">{el.time}</span>
             </li>
           ) : (
             ""
@@ -250,7 +248,7 @@ const AllCharts = ({ onSelectFriendFromOldFriends, seeOrHideAllChats }) => {
               onClick={() => onSelectFriendFromOldFriends(el.phoneNum)}
             >
               <img src={el.img} />
-              <span>{el.fullName}</span>
+              <span className="span">{el.fullName}</span>
             </li>
           ))}
         </ul>
@@ -271,12 +269,12 @@ const Owner = ({
   return (
     <>
       {seeHideFriendAcc ? (
-        <div className="owner">
+        <div className="owner person">
           <ul>
             {me.map((el) => (
               <li key={el.fullName}>
                 <img src={el.img} alt="codesmann img" />
-                <span>{el.fullName}</span>
+                <span className="span">{el.fullName}</span>
               </li>
             ))}
           </ul>
