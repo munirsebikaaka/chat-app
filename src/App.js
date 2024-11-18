@@ -24,8 +24,9 @@ function App() {
   const [checkInputs, setCheckInputs] = useState(false);
   const [hideLogin, setHideLogin] = useState(false);
   const [logError, setLogError] = useState("");
+  const [showAllChatsCell, setShowAllChatsCell] = useState(false);
 
-  const [hideIntro, setHideIntro] = useState(false);
+  // const [hideIntro, setHideIntro] = useState(false);
 
   const me = [
     {
@@ -67,7 +68,7 @@ function App() {
       (el) => el.phoneNum === phoneNum && setPersonChat([...personChat, el])
     );
     setSeeOrHideAllChats((see) => !see);
-    // setHideIntro(true);
+    setShowAllChatsCell(true);
   };
 
   const seeFriendAcc = () => {
@@ -85,7 +86,7 @@ function App() {
 
   return (
     <div className="mainApp">
-      {/* <Login
+      <Login
         firstName={firstName}
         phoneNum={phoneNum}
         password={password}
@@ -95,18 +96,18 @@ function App() {
         onLoginToApplication={loginToApplication}
         hideLogin={hideLogin}
         logError={logError}
-      /> */}
-      {/* {checkInputs ? ( */}
-      <Introduction
-        onSeeAllChats={seeAllChats}
-        onSeeFriendAcc={seeFriendAcc}
-        firstName={firstName}
-        // hideIntro={hideIntro}
-        seeHideFriendAcc={seeHideFriendChats}
       />
-      {/* ) : (
+      {checkInputs ? (
+        <Introduction
+          onSeeAllChats={seeAllChats}
+          onSeeFriendAcc={seeFriendAcc}
+          firstName={firstName}
+          seeHideFriendAcc={seeHideFriendChats}
+          showAllChatsCell={showAllChatsCell}
+        />
+      ) : (
         ""
-      )} */}
+      )}
 
       <div className="main">
         {!seeHideFriendChats ? (
@@ -117,6 +118,9 @@ function App() {
             chatOb2={chatOb2}
             onPushToChats2={onPushToChats2}
             personChat={personChat}
+            showAllChatsCell={showAllChatsCell}
+            onSeeFriendAcc={seeFriendAcc}
+            seeHideFriendAcc={seeFriendAcc}
           />
         ) : (
           <Owner
@@ -125,7 +129,8 @@ function App() {
             onPushToChats={onPushToChats}
             chatOb1={chatOb1}
             chatOb2={chatOb2}
-            seeHideFriendAcc={seeHideFriendChats}
+            seeHideFriendAcc1={seeHideFriendChats}
+            onSeeFriendAcc={seeFriendAcc}
             me={me}
           />
         )}
@@ -138,23 +143,14 @@ function App() {
   );
 }
 
-const Introduction = ({
-  onSeeAllChats,
-  onSeeFriendAcc,
-  hideIntro,
-  firstName,
-  seeHideFriendAcc,
-}) => {
+const Introduction = ({ onSeeAllChats, firstName, showAllChatsCell }) => {
   return (
     <>
-      {!hideIntro ? (
+      {!showAllChatsCell ? (
         <div className="firstSight">
-          <h1>Hello and Welcome Mr/Mrs {firstName} to the simple Chat App</h1>
+          <h1>Hello {firstName} this is the simple Chat App</h1>
           <button className="findChats" onClick={onSeeAllChats}>
             find chats
-          </button>
-          <button onClick={onSeeFriendAcc}>
-            {seeHideFriendAcc ? "your chats" : "see freind"}{" "}
           </button>
         </div>
       ) : (
@@ -171,32 +167,44 @@ const Friend = ({
   chatOb1,
   chatOb2,
   personChat,
+  showAllChatsCell,
+  onSeeFriendAcc,
+  seeHideFriendAcc,
 }) => {
   return (
-    <div className="person">
-      <ul>
-        {personChat.map((el) =>
-          el.fullName ? (
-            <li className="span">
-              <img src={el.img} />
-              <span>{el.fullName}</span>
-            </li>
-          ) : (
-            ""
-          )
-        )}
-      </ul>
-      <Chats chatOb1={chatOb1} chatOb2={chatOb2} />
+    <>
+      {showAllChatsCell ? (
+        <div className="person">
+          <button onClick={onSeeFriendAcc}>
+            {seeHideFriendAcc ? "you" : "freind"}{" "}
+          </button>
+          <ul>
+            {personChat.map((el) =>
+              el.fullName ? (
+                <li className="span">
+                  <img src={el.img} />
+                  <span>{el.fullName}</span>
+                </li>
+              ) : (
+                ""
+              )
+            )}
+          </ul>
+          <Chats chatOb1={chatOb1} chatOb2={chatOb2} />
 
-      <div className="textInput">
-        <input
-          type="text"
-          value={chat2}
-          onChange={(e) => setChat2(e.target.value)}
-        />
-        <button onClick={onPushToChats2}>send</button>
-      </div>
-    </div>
+          <div className="textInput">
+            <input
+              type="text"
+              value={chat2}
+              onChange={(e) => setChat2(e.target.value)}
+            />
+            <button onClick={onPushToChats2}>send</button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+    </>
   );
 };
 
@@ -264,12 +272,17 @@ const Owner = ({
   onPushToChats,
   chatOb1,
   chatOb2,
+  seeHideFriendAcc1,
   seeHideFriendAcc,
+  onSeeFriendAcc,
 }) => {
   return (
     <>
-      {seeHideFriendAcc ? (
+      {seeHideFriendAcc1 ? (
         <div className="owner person">
+          <button onClick={onSeeFriendAcc}>
+            {seeHideFriendAcc ? "your" : "freind"}{" "}
+          </button>
           <ul>
             {me.map((el) => (
               <li key={el.fullName}>

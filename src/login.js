@@ -30,9 +30,9 @@ const Login = ({
             />
           </svg>
 
-          <h1 className="intro">create acount</h1>
+          <h1 className="intro">Welcome to chat app</h1>
           <div>
-            <p>enter your name</p>
+            <p>name</p>
             <input
               type="text"
               value={firstName}
@@ -41,7 +41,7 @@ const Login = ({
           </div>
 
           <div>
-            <p>phone number</p>
+            <p>number</p>
 
             <input
               type="number"
